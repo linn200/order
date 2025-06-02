@@ -164,15 +164,16 @@
 |----------|---------|-----------|----|--------------|
 | `id`     |   int   | 訂單編號 | 否 | 主鍵,自動產生 |
 | `user_id`   | int | 使用者編號 | 否 | 外鍵 |
-| `status`  | varchar | 訂單狀態   | 否 | CHECK status IN ('處理中', '已完成', '已取消')|
-| `total_price`   | DECIMAL | 訂單總金額 | 否 | CHECK total_price >= 0|
+| `status`  | varchar | 訂單狀態   | 否 | 訂單狀態格式|
+| `total_price`   | DECIMAL | 訂單總金額 | 否 | 訂單總金額格式|
 | `order_time`  | TIMESTAMP | 訂單建立時間   | 否 | |
 
   **外鍵說明：**
   - `user_id`→`users(id)`
 
   **格式說明：**
-  - 電話：09 開頭，後接 8 位數字
+  - 訂單狀態格式為('處理中', '已完成', '已取消')
+  - 訂單總金額格式>=0，預設為0
 
 ---
 
@@ -191,12 +192,14 @@
 | 欄位名稱 | 資料型別 | 中文說明 | 是否為空值 | 完整性限制 |
 |----------|---------|-----------|----|--------------|
 | `id`     |   int   | 訂單內容編號 | 否 | 主鍵,自動產生 |
-| `order_id`   | int | 飲料名稱 | 否 | NOT NULL |
-| `drink_id`  | int | 冰塊程度   | 否 | NOT NULL |
-| `quantity`  | int | 甜度   | 否 | NOT NULL |
+| `order_id`   | int | 訂單編號 | 否 | 外鍵 |
+| `drink_id`  | int | 飲料編號   | 否 | 外鍵 |
+| `quantity`  | int | 數量   | 否 |數量>=1 |
 
-  **格式說明：**
-  - 
+  **外鍵說明：**
+  - `order_id`→`orders(id)`
+  - `drink_id`→`drinks(id)`
+  
 
 ---
 ### 關係資料表
@@ -216,12 +219,13 @@
   ```
 | 欄位名稱 | 資料型別 | 中文說明 | 是否為空值 | 完整性限制 |
 |----------|---------|-----------|----|--------------|
-| `id`     |   int   | 配料編號 | 否 | 主鍵,自動產生 |
-| `order_item_id`   | varchar | 配料名稱 | 否 | 外鍵,NOT NULL |
-| `add_on_id`  | DECIMAL |  價格   | 否 | 外鍵,NOT NULL,UNIQUE |
-| `quantity`  | DECIMAL |  價格   | 否 | NOT NULL,CHECK quantity >= 1|
+| `id`     |   int   | 加料明細編號 | 否 | 主鍵,自動產生 |
+| `order_item_id`   | int | 所屬訂單項目編號 | 否 | 外鍵,UNIQUE |
+| `add_on_id`  | int |  加料項目編號   | 否 | 外鍵,UNIQUE |
+| `quantity`  | int |  加料的數量   | 否 |CHECK quantity >= 1|
 
-  **格式說明：**
-  - 
+  **外鍵說明：**
+  - `order_item_id`→`order_items(id)`
+  - `add_on_id`→`add_ons(id)`
   
 ---
