@@ -108,8 +108,6 @@
   CREATE TABLE drinks (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL,
-  ice_level VARCHAR(20) NOT NULL,
-  sugar_level VARCHAR(20) NOT NULL,
   price DECIMAL(5,2) NOT NULL CHECK (price > 0)
   );
   ```
@@ -117,14 +115,11 @@
 |----------|---------|-----------|----|--------------|
 | `id`     |   int   | 飲料編號 | 否 | 主鍵,自動產生 |
 | `name`   | varchar | 飲料名稱 | 否 |飲料名稱格式|
-| `ice_level`  | varchar | 冰塊程度   | 否 |冰塊程度格式|
-| `sugar_level`  | varchar | 甜度   | 否 |甜度格式 |
 | `price`  | DECIMAL |  價格   | 否 | CHECK price > 0 |
 
   **格式說明：**
-  - 飲料名稱格式：為4~6字中文
-  - 冰塊程度格式：去冰、微冰、少冰、正常冰擇一
-  - 甜度格式：無糖、微糖、少糖、正常甜擇一
+  - 飲料名稱格式：為2~6字中文
+  
 ---
 
 ### `add_ons` -加料資料表
@@ -185,6 +180,8 @@
   order_id INT NOT NULL,
   drink_id INT NOT NULL,
   quantity INT NOT NULL CHECK (quantity >= 1),
+  sugar_level VARCHAR(20) NOT NULL,
+  ice_level VARCHAR(20) NOT NULL,
   FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
   FOREIGN KEY (drink_id) REFERENCES drinks(id)
   );
@@ -195,11 +192,16 @@
 | `order_id`   | int | 訂單編號 | 否 | 外鍵 |
 | `drink_id`  | int | 飲料編號   | 否 | 外鍵 |
 | `quantity`  | int | 數量   | 否 |數量>=1 |
+| `ice_level`  | varchar | 冰塊程度   | 否 |冰塊程度格式|
+| `sugar_level`  | varchar | 甜度   | 否 |甜度格式 |
 
   **外鍵說明：**
   - `order_id`→`orders(id)`
   - `drink_id`→`drinks(id)`
   
+   **格式說明：**
+  - 冰塊程度格式：去冰、微冰、少冰、正常冰擇一
+  - 甜度格式：無糖、微糖、少糖、正常甜擇一
 
 ---
 ### 關係資料表
@@ -243,6 +245,15 @@
 ---
 
   ## 點餐系統 SQL 查詢
+
+  ### 查詢顧客資料表
+  ```sql
+  SELECT id, name, phone 
+  FROM users;
+  ```
+
+  ![example](Picture/one.png)
+
 
   
   
