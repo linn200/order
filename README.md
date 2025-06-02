@@ -98,7 +98,7 @@
 
   **格式說明：**
   - 電話：09 開頭，後接 8 位數字
-  - 使用者姓名格式：中文1~3字
+  - 使用者姓名格式：中文1~4字
 
 ---
 
@@ -198,7 +198,7 @@
   **外鍵說明：**
   - `order_id`→`orders(id)`
   - `drink_id`→`drinks(id)`
-  
+
    **格式說明：**
   - 冰塊程度格式：去冰、微冰、少冰、正常冰擇一
   - 甜度格式：無糖、微糖、少糖、正常甜擇一
@@ -251,8 +251,60 @@
   SELECT id, name, phone 
   FROM users;
   ```
+  
+  說明：列出所有顧客名稱與電話。
 
-  ![example](Picture/one.png)
+  ![example](Picture/users.png)
+
+  ### 查詢飲料資料表
+  ```sql
+  SELECT id, name, price 
+  FROM drinks;
+  ```
+  
+  說明：列出所有飲料名稱與價格。
+
+  ![example](Picture/DRINKS.png)
+
+  ### 查詢加料資料表
+  ```sql
+  SELECT id, name, price 
+  FROM add_ons;
+  ```
+  
+  說明：列出所有物料名稱與價格。
+
+  ![example](Picture/add_ons.png)
+
+  ### 查詢訂單資料表
+  ```sql
+  SELECT id, user_id, status, total_price, order_time 
+  FROM orders;
+  ```
+  
+  說明：列出所有訂單編號、狀態、總金額與訂單建立時間。
+
+  ![example](Picture/orders.png)
+
+  ### 查詢訂單內容資料表
+  ```sql
+  SELECT id, order_id, drink_id, quantity, sugar_level, ice_level 
+  FROM order_items;
+  ```
+  
+  說明：列出所有所有訂單編號、飲料編號、數量、甜度與冰塊。
+
+  ![example](Picture/order_items.png)
+
+  ### 查詢訂單資料表
+  ```sql
+  SELECT id, user_id, status, total_price, order_time 
+  FROM orders;
+  ```
+  
+  說明：列出所有訂單項目編號、加料編號與數量。
+
+  ![example](Picture/order_item_add_ons.png)
 
 
   
