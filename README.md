@@ -239,3 +239,10 @@
   - order_items ↔️ drinks：每個訂單項目對應一種飲料品項 → 多對一（N:1）
   - order_items ↔️ order_item_add_ons：每杯飲料可以選多種加料 → 一對多（1:N）
   - order_item_add_ons ↔️ add_ons：每筆加料項目指向一種加料類型 → 多對一（N:1）
+
+---
+
+  ## 點餐系統 SQL 查詢
+
+  
+  
