@@ -264,7 +264,7 @@
   
   說明：列出所有飲料名稱與價格。
 
-  ![example](Picture/DRINKS.png)
+  ![example](Picture/drinks.png)
 
   ### 查詢加料資料表
   ```sql
