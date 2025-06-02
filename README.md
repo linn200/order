@@ -233,4 +233,9 @@
 ## 關係介紹
 
   ![飲料點餐系統關係圖](Picture/飲料點餐系統關係圖.png)
-  
+
+  - users ↔️ orders：一位使用者可以有多筆訂單 → 一對多（1:N）
+  - orders ↔️ order_items：一筆訂單可以包含多杯飲料 → 一對多（1:N）
+  - order_items ↔️ drinks：每個訂單項目對應一種飲料品項 → 多對一（N:1）
+  - order_items ↔️ order_item_add_ons：每杯飲料可以選多種加料 → 一對多（1:N）
+  - order_item_add_ons ↔️ add_ons：每筆加料項目指向一種加料類型 → 多對一（N:1）
