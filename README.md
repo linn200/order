@@ -17,30 +17,34 @@
     <th>學號</th>
     <th>班級</th>
     <th>分工</th>
+    <th>心得</th>
   </tr>
   <tr>
     <td>吳承諺</td>
     <td>41143212</td>
     <td>四資工三乙</td>
-    <td>資料</td>
+    <td>資料庫內容、報告書</td>
+    <td>我覺得資料庫系統在資工的領域是很重要的一環，在現實生活中也可以找到實際的應用範圍，例如簡單的點餐系統，物流的倉庫系統，甚至餐廳等等背後都有一套資料庫系統支撐著，上了這門課之後，我不僅學習到架設資料庫的方法，也從江季翰老師那裡學到很多實用技術與應用，很可惜只有短短的一學期可以學習，背後還有很多技術和理論等者我去學習，如果有機會我還想繼續學更多有關資料庫的使用方法和語法。</td>
   </tr>
   <tr>
     <td>林昶任</td>
     <td>41143221</td>
     <td>四資工三乙</td>
-    <td>資料</td>
+    <td>簡報製作、資料查詢</td>
   </tr>
   <tr>
     <td>孫茂棋</td>
     <td>41143227</td>
     <td>四資工三乙</td>
     <td>資料庫架構設計</td>
+    <td>這次資料庫設計練習幫助我掌握如何建構一套完整的點餐系統資料架構。從欄位設計、關聯建立，到總價計算與加料功能的擴充，都考驗了我對資料正規化與資料一致性的理解。透過這樣的練習，我更能體會資料庫在後端應用中的實際價值，也為未來系統開發打下了良好基礎。</td>
   </tr>
   <tr>
     <td>張大軒</td>
     <td>41143229</td>
     <td>四資工三乙</td>
-    <td>資料</td>
+    <td>簡報製作、使用者情境設計</td>
+    <td>透過這次建立訂飲料系統的資料庫，我更深入了解資料表之間的關聯設計，包含一對多、多對多的實作方式。從使用者到訂單，再延伸到飲料項目與加料，透過中介表的串接，不僅讓資料結構更有彈性，也讓後續的查詢與管理更加清楚、有系統。這對於日後開發實務應用系統有很大幫助。</td>
   </tr>
 </table>
 
@@ -74,6 +78,8 @@
   ### 作業一：🔗 [前往作業一連結](https://www.canva.com/design/DAGozklzGvo/N1lHHMMyptmtGxoi0u19gQ/edit)
 
   ### 作業二：🔗 [前往作業二連結](https://www.canva.com/design/DAGkD-yIu18/X0QnyDlcBUyQKZHi5sCsTA/edit?ui=eyJIIjp7IkEiOnRydWV9fQ)
+
+  ### 作業三：🔗 [前往作業三連結](https://www.canva.com/design/DAGpN29BIrY/SJi86mVFgNXX1xQA20QyKg/edit?utm_content=DAGpN29BIrY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
   
   ---
 
@@ -307,6 +313,52 @@
 
   ![example](Picture/order_item_add_ons.png)
 
+  ###  `drink_sales_ranking_view` 查詢飲品銷售排行
+  ```sql
+  create or replace
+  algorithm = UNDEFINED view `drink_sales_ranking_view` as
+  select
+    `d`.`name` as `drink_name`,
+    sum(`oi`.`quantity`) as `total_sold`,
+    sum(`oi`.`quantity` * `d`.`price`) as `total_revenue`
+  from
+    (`order_items` `oi`
+  join `drinks` `d` on
+    (`oi`.`drink_id` = `d`.`id`))
+  group by
+    `d`.`id`
+  order by
+    sum(`oi`.`quantity`) desc;
+  ```
+  
+  說明：這個視圖會根據 order_items 和 drinks 兩張資料表的資料，統計出每種飲料的：
+
+- 銷售總杯數（total_sold）
+- 總營收金額（total_revenue）
+- 並依照銷售量由高到低排序
+
+  ![example](Picture/drink_sales_ranking_view.png)
+
+  ###  `order_summary_view` 查詢訂單總覽資訊
+  ```sql
+  create or replace
+  algorithm = UNDEFINED view order_summary_view as
+  select
+    o.id as order_id,
+    u.name as customer_name,
+    u.phone as customer_phone,
+    o.total_price as total_price,
+    o.status as status,
+    o.order_time as order_time
+  from
+    (orders o
+  join users u on
+    (o.user_id = u.id));
+  ```
+  
+  說明：彙整訂單的基本資訊（顧客、價格、狀態、時間）
+
+  ![example](Picture/order_summary_view.png)
 
   
   
