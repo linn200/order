@@ -314,7 +314,6 @@
 
   ![example](Picture/order_item_add_ons.png)
 
-<<<<<<< HEAD
   ###  `drink_sales_ranking_view` 查詢飲品銷售排行
   ```sql
   create or replace
@@ -362,5 +361,4 @@
 
   ![example](Picture/order_summary_view.png)
   
- 
  
