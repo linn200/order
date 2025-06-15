@@ -313,52 +313,5 @@
 
   ![example](Picture/order_item_add_ons.png)
 
-  ###  `drink_sales_ranking_view` 查詢飲品銷售排行
-  ```sql
-  create or replace
-  algorithm = UNDEFINED view `drink_sales_ranking_view` as
-  select
-    `d`.`name` as `drink_name`,
-    sum(`oi`.`quantity`) as `total_sold`,
-    sum(`oi`.`quantity` * `d`.`price`) as `total_revenue`
-  from
-    (`order_items` `oi`
-  join `drinks` `d` on
-    (`oi`.`drink_id` = `d`.`id`))
-  group by
-    `d`.`id`
-  order by
-    sum(`oi`.`quantity`) desc;
-  ```
-  
-  說明：這個視圖會根據 order_items 和 drinks 兩張資料表的資料，統計出每種飲料的：
 
-- 銷售總杯數（total_sold）
-- 總營收金額（total_revenue）
-- 並依照銷售量由高到低排序
-
-  ![example](Picture/drink_sales_ranking_view.png)
-
-  ###  `order_summary_view` 查詢訂單總覽資訊
-  ```sql
-  create or replace
-  algorithm = UNDEFINED view order_summary_view as
-  select
-    o.id as order_id,
-    u.name as customer_name,
-    u.phone as customer_phone,
-    o.total_price as total_price,
-    o.status as status,
-    o.order_time as order_time
-  from
-    (orders o
-  join users u on
-    (o.user_id = u.id));
-  ```
-  
-  說明：彙整訂單的基本資訊（顧客、價格、狀態、時間）
-
-  ![example](Picture/order_summary_view.png)
-
-  
   
